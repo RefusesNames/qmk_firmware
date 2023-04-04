@@ -49,9 +49,38 @@
 
 enum custom_keycodes {
   RGB_SLD = EZ_SAFE_RANGE,
-  ST_MACRO_0,
+  MACRO_UMLAUT_A,
+  MACRO_UMLAUT_O,
+  MACRO_UMLAUT_U,
+  MACRO_SHARP_S,
   ST_MACRO_1,
+  TEST_MACRO
 };
+
+
+/*
+// This does not works since key override only allow simple replacements
+// see https://www.reddit.com/r/olkb/comments/u0j0w5/comment/i466ql8
+// to use this, make sure to use
+// KEY_OVERRIDE_ENABLE = yes
+// in rules.mk
+const key_override_t override_for_umlaut_A = ko_make_basic(
+    MOD_MASK_SHIFT | MOD_MASK_ALT | MOD_MASK_CTRL,
+    KC_A,
+    // KC_X);
+    MACRO_UMLAUT_A);
+
+
+const key_override_t** key_overrides = (const key_override_t *[]){
+    &override_for_umlaut_A,
+    NULL
+};
+// Runs just one time when the keyboard initializes.
+void keyboard_post_init_user(void) {
+#ifdef RGBLIGHT_COLOR_LAYER_0
+    rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+#endif
+*/
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -61,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,      KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCOLON,      MT(MOD_LGUI, KC_QUOTE),
     KC_LSHIFT,      MT(MOD_LCTL, KC_Z),KC_X,           KC_C,           KC_V,           KC_B,           KC_HOME,                                        KC_END,         KC_N,           KC_M,           KC_COMMA,       KC_DOT,         MT(MOD_RCTL, KC_SLASH),KC_RSHIFT,
     LT(3,KC_GRAVE), KC_TRANSPARENT, KC_LALT,        KC_LEFT,        KC_RIGHT,                                                                                                       KC_UP,          KC_DOWN,        KC_RALT,        KC_TRANSPARENT, MO(3),
-                                                                                                    TG(2),          ST_MACRO_0,     KC_TRANSPARENT, TG(1),
+                                                                                                    TG(2),          KC_TRANSPARENT,     KC_TRANSPARENT, TG(1),
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_SPACE,       KC_BSPACE,      KC_LBRACKET,    KC_RBRACKET,    KC_TAB,         KC_ENTER
   ),
@@ -87,8 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [3] = LAYOUT_ergodox_pretty(
     KC_TRANSPARENT, KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
-    KC_TRANSPARENT, KC_HASH,        KC_AT,          KC_QUOTE,       KC_GRAVE,       KC_TRANSPARENT, TO(0),                                          KC_TRANSPARENT, KC_TRANSPARENT, KC_PERC,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TILD,        KC_F12,
-    KC_TRANSPARENT, KC_MINUS,       KC_PLUS,        KC_BSLASH,      KC_SLASH,       KC_TRANSPARENT,                                                                 KC_DLR,         KC_AMPR,        KC_ASTR,        KC_CIRC,        KC_EQUAL,       RESET,
+    KC_TRANSPARENT, KC_HASH,        KC_AT,          KC_QUOTE,       KC_GRAVE,       KC_TRANSPARENT, TO(0),                                          KC_TRANSPARENT, KC_TRANSPARENT, MACRO_UMLAUT_U, KC_TRANSPARENT, MACRO_UMLAUT_O, KC_TILD,        KC_F12,
+    KC_TRANSPARENT, MACRO_UMLAUT_A, MACRO_SHARP_S,  KC_TRANSPARENT, KC_SLASH,       KC_TRANSPARENT,                                                 KC_DLR,         KC_AMPR,        KC_ASTR,        KC_CIRC,        KC_EQUAL,       RESET,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -152,14 +181,47 @@ void rgb_matrix_indicators_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case ST_MACRO_0:
+    case MACRO_UMLAUT_A:
     if (record->event.pressed) {
-      SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_9) SS_TAP(X_KP_6) ));
+        if (get_mods() & MOD_MASK_SHIFT)
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_9) SS_TAP(X_KP_6)));
+        else
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_2) SS_TAP(X_KP_8)));
+    }
+    break;
+    case MACRO_UMLAUT_U:
+    if (record->event.pressed) {
+        if (get_mods() & MOD_MASK_SHIFT)
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_2) SS_TAP(X_KP_0)));
+        else
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_5) SS_TAP(X_KP_2)));
+    }
+    break;
+    case MACRO_UMLAUT_O:
+    if (record->event.pressed) {
+        if (get_mods() & MOD_MASK_SHIFT)
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_1) SS_TAP(X_KP_4)));
+        else
+          SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_4) SS_TAP(X_KP_6)));
+    }
+    break;
+    case MACRO_SHARP_S:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_2) SS_TAP(X_KP_3)));
     }
     break;
     case ST_MACRO_1:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_G) SS_DELAY(100) SS_TAP(X_D));
+    }
+    break;
+
+    case TEST_MACRO:
+    if (record->event.pressed) {
+        if (get_mods() & MOD_MASK_SHIFT)
+            SEND_STRING("Upper Case");
+        else
+            SEND_STRING("Lower Case");
     }
     break;
 
