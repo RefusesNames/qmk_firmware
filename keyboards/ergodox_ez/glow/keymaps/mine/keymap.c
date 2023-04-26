@@ -58,13 +58,23 @@ enum custom_keycodes {
     MACRO_UMLAUT_U,
     MACRO_SHARP_S,
 
-    // VIM LAYER MACROS
+    // VIM - Normal mode macros
     MACRO_APPEND,
     MACRO_NEXT_WORD,
     MACRO_CHANGE,
     MACRO_GOTO_END,
-};
+    MACRO_CUT_SINGLE,
 
+    // VIM - Visual mode macros
+    MACRO_NEXT_WORD_V,
+    MACRO_CHANGE_V,
+    MACRO_GOTO_END_V,
+    MACRO_END_SELECT,
+    MACRO_DELETE_V,
+    MACRO_COPY_V,
+    MACRO_PASTE_V,
+    MACRO_VIM_END_V,
+};
 
 /*
 // This does not works since key override only allow simple replacements
@@ -92,6 +102,10 @@ void keyboard_post_init_user(void) {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // DEFAULT WRITING
+  ////////////////////////////////////////////////////////////////////////////////////////
   [0] = LAYOUT_ergodox_pretty(
     KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_PC_UNDO,                                     KC_PC_UNDO,     KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
     KC_DELETE,      KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           RGB_MOD,                                        OSL(3),         KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
@@ -102,6 +116,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                     TG(4),          KC_TRANSPARENT,
                                                                                     KC_SPACE,       KC_BSPACE,      KC_LBRACKET,    KC_RBRACKET,    KC_TAB,         KC_ENTER
   ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // GAMING
+  ////////////////////////////////////////////////////////////////////////////////////////
   [1] = LAYOUT_ergodox_pretty(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_W,           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TAB,                                         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -112,6 +130,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // DEBUG
+  ////////////////////////////////////////////////////////////////////////////////////////
   [2] = LAYOUT_ergodox_pretty(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, LSFT(KC_F11),   KC_F5,          KC_TRANSPARENT, TO(0),                                          KC_TRANSPARENT, KC_TRANSPARENT, KC_F5,          RSFT(KC_F11),   KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -122,6 +144,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // UTILITY
+  ////////////////////////////////////////////////////////////////////////////////////////
   [3] = LAYOUT_ergodox_pretty(
     KC_TRANSPARENT, KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_NUM_LOCK,                                    KC_TRANSPARENT, KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
     KC_TRANSPARENT, KC_HASH,        KC_AT,          KC_QUOTE,       KC_GRAVE,       KC_TRANSPARENT, TO(0),                                          KC_TRANSPARENT, KC_TRANSPARENT, MACRO_UMLAUT_U, KC_TRANSPARENT, MACRO_UMLAUT_O, KC_TILD,        KC_F12,
@@ -132,16 +158,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_LPRN,        KC_LBRACKET,    KC_TRANSPARENT, KC_TRANSPARENT, KC_RBRACKET,    KC_RPRN
   ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // VIM - NORMAL MODE
+  ////////////////////////////////////////////////////////////////////////////////////////
   [4] = LAYOUT_ergodox_pretty(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, LCTL(KC_RIGHT), MACRO_GOTO_END, KC_TRANSPARENT, KC_TRANSPARENT, TO(0),                                       KC_TRANSPARENT, LCTL(KC_C),     KC_TRANSPARENT, TG(4),          KC_TRANSPARENT, LCTL(KC_V),     KC_TRANSPARENT,
-    KC_TRANSPARENT, MACRO_APPEND,   KC_TRANSPARENT, LCTL(KC_X),     KC_TRANSPARENT, KC_TRANSPARENT,                                                              KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MACRO_CHANGE,   KC_TRANSPARENT, LCTL(KC_LEFT),  KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-                                                                                                    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-                                                                                                                    KC_TRANSPARENT, KC_TRANSPARENT,
-                                                                                    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, MACRO_NEXT_WORD, MACRO_GOTO_END, KC_TRANSPARENT, KC_TRANSPARENT, TO(0),                                       KC_TRANSPARENT, LCTL(KC_C),     KC_TRANSPARENT, TG(4),          KC_TRANSPARENT, LCTL(KC_V),     KC_TRANSPARENT,
+    KC_TRANSPARENT, MACRO_APPEND,   KC_TRANSPARENT,  LCTL(KC_X),     KC_TRANSPARENT, KC_TRANSPARENT,                                                              KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, MACRO_CUT_SINGLE,MACRO_CHANGE,   TG(5),          LCTL(KC_LEFT),  KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT,                                                                                          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // VIM - VISUAL MODE
+  ////////////////////////////////////////////////////////////////////////////////////////
+  [5] = LAYOUT_ergodox_pretty(
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,    KC_TRANSPARENT,   KC_TRANSPARENT,   KC_TRANSPARENT, KC_TRANSPARENT,                               KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, MACRO_NEXT_WORD_V, MACRO_GOTO_END_V, KC_TRANSPARENT,   KC_TRANSPARENT, KC_TRANSPARENT,                               KC_TRANSPARENT, MACRO_COPY_V,   KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MACRO_PASTE_V,  KC_TRANSPARENT,
+    TG(5),          KC_TRANSPARENT, KC_TRANSPARENT,    MACRO_DELETE_V,   KC_TRANSPARENT,   KC_TRANSPARENT,                                                               LSFT(KC_LEFT),  LSFT(KC_DOWN),  LSFT(KC_UP),    LSFT(KC_RIGHT), KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, MACRO_DELETE_V,    MACRO_CHANGE_V,   MACRO_END_SELECT, KC_TRANSPARENT, KC_TRANSPARENT,                               KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,    KC_TRANSPARENT,   KC_TRANSPARENT,                                                                                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                           KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                                           MACRO_VIM_END_V, KC_TRANSPARENT,
+                                                                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // TEMPLATE
+  ////////////////////////////////////////////////////////////////////////////////////////
   // [4] = LAYOUT_ergodox_pretty(
   //   KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
   //   KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(0),                                       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -163,35 +211,53 @@ void keyboard_post_init_user(void) {
 }
 
 // 64 LEDS
-const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
+const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][5] = {
     [1] = { {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {93,189,232}, {38,189,232}, {149,189,232}, {0,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {74,246,199}, {149,189,232}, {149,189,232}, {149,189,232}, {74,246,199}, {74,246,199}, {74,246,199}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232}, {149,189,232} },
 
     [2] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {91,252,226}, {0,245,219}, {0,0,0}, {0,0,0}, {0,0,0}, {42,224,253}, {21,255,242}, {0,0,0}, {168,255,226}, {0,0,0}, {91,252,226}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {91,252,226}, {0,245,219}, {0,0,0}, {0,0,0}, {0,0,0}, {42,224,253}, {21,255,242}, {0,0,0}, {168,255,226}, {0,0,0}, {91,252,226}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
 
     [3] = { {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253} },
 
-    /////////////////////////////////////////////////
-    ////////////////// VIM LAYER ////////////////////
-    /////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    // VIM - NORMAL MODE
+    //////////////////////////////////////////////////////////////////////////////////////
     [4] = {
         // RIGHT SIDE:
         {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
-        { 28,255,255}, {000,000,000}, {106,255,190}, {000,000,000}, { 78,255,230},
+        {000,000,000}, {000,000,000}, {106,255,190}, {000,000,000}, { 78,255,230},
         {150,255,255}, {150,255,255}, {150,255,255}, {150,255,255}, {000,000,000},
         {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
                        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
         // LEFT SIDE (it's mirrored, don't ask me why...):
         {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
         {000,000,000}, {000,000,000}, {150,255,255}, {150,255,255}, {000,000,000},
-        {000,000,000}, {000,000,000}, {255,255,255}, {000,000,000}, {106,255,190},
-        {150,255,255}, {200,255,255}, { 42,255,255}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {106,255,190},
+        {150,255,255}, {200,255,255}, {000,000,000}, {255,255,255}, {000,000,000},
+                       {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}
+    },
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // VIM - VISUAL MODE
+    //////////////////////////////////////////////////////////////////////////////////////
+    [5] = {
+        // RIGHT SIDE:
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        { 28,255,255}, {000,000,000}, {000,000,000}, {000,000,000}, { 78,255,230},
+        {150,255,255}, {150,255,255}, {150,255,255}, {150,255,255}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+                       {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        // LEFT SIDE (it's mirrored, don't ask me why...):
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {150,255,255}, {150,255,255}, {000,000,000},
+        {000,000,000}, {000,000,000}, {255,255,255}, {000,000,000}, {000,000,000},
+        {150,255,255}, {200,255,255}, { 42,255,255}, {255,255,255}, {000,000,000},
                        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}
     },
 
 
-    /////////////////////////////////////////////////
-    ////////////////// TEMPLATE /////////////////////
-    /////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    // TEMPLATE
+    //////////////////////////////////////////////////////////////////////////////////////
     //
     // [0] = {
     //     // RIGHT SIDE:
@@ -240,6 +306,9 @@ void rgb_matrix_indicators_user(void) {
       break;
     case 4:
       set_layer_color(4);
+      break;
+    case 5:
+      set_layer_color(5);
       break;
    default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE)
@@ -301,17 +370,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_RIGHT));
         layer_off(4);
+        return false;
     }
     break;
     case MACRO_NEXT_WORD:
-        SEND_STRING(SS_LSFT(SS_TAP(X_RIGHT)) SS_TAP(X_RIGHT));
+        SEND_STRING(SS_LCTL(SS_TAP(X_RIGHT)));
     break;
     case MACRO_CHANGE:
-        SEND_STRING(SS_TAP(X_BACKSPACE));
+        SEND_STRING(SS_LCTL(SS_TAP(X_X)));
         layer_off(4);
-    break;
+        return false;
     case MACRO_GOTO_END:
         SEND_STRING(SS_LCTL(SS_TAP(X_RIGHT)) SS_TAP(X_LEFT));
+    break;
+    case MACRO_CUT_SINGLE:
+        SEND_STRING(SS_LSFT(SS_TAP(X_RIGHT)) SS_LCTL(SS_TAP(X_X)));
+    break;
+
+    case MACRO_NEXT_WORD_V:
+        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_RIGHT)) SS_TAP(X_RIGHT)));
+    break;
+    case MACRO_DELETE_V:
+        SEND_STRING(SS_LCTL(SS_TAP(X_X)));
+        layer_off(5);
+        break;
+    case MACRO_CHANGE_V:
+        SEND_STRING(SS_LCTL(SS_TAP(X_X)));
+        layer_off(5);
+        layer_off(4);
+        return false;
+    case MACRO_GOTO_END_V:
+        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_RIGHT)) SS_TAP(X_LEFT)));
+    break;
+    case MACRO_PASTE_V:
+        SEND_STRING(SS_LCTL(SS_TAP(X_V)));
+        layer_off(5);
+        break;
+    case MACRO_COPY_V:
+        SEND_STRING(SS_LCTL(SS_TAP(X_C)));
+    case MACRO_END_SELECT:
+        layer_off(5);
+    break;
+    case MACRO_VIM_END_V:
+        layer_off(5);
+        layer_off(4);
     break;
 
     case RGB_SLD:
