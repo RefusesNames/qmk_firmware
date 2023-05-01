@@ -347,6 +347,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_2) SS_TAP(X_KP_8)));
         }
+        return false;
     }
     break;
     case MACRO_UMLAUT_U:
@@ -356,6 +357,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_5) SS_TAP(X_KP_2)));
         }
+        return false;
     }
     break;
     case MACRO_UMLAUT_O:
@@ -365,11 +367,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_4) SS_TAP(X_KP_6)));
         }
+        return false;
     }
     break;
     case MACRO_SHARP_S:
     if (record->event.pressed) {
         SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_2) SS_TAP(X_KP_2) SS_TAP(X_KP_3)));
+        return false;
     }
     break;
     case ST_MACRO_1:
