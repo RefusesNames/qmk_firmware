@@ -109,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ergodox_pretty(
     KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_PC_UNDO,                                     KC_PC_UNDO,     KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
     KC_DELETE,      KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           RGB_MOD,                                        OSL(3),         KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
-    KC_ESCAPE,      KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCOLON,      MT(MOD_LGUI, KC_QUOTE),
+    KC_ESCAPE,      KC_A,           KC_S,           KC_D,           LT(4,KC_F),     KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCOLON,      MT(MOD_LGUI, KC_QUOTE),
     KC_LSHIFT,      MT(MOD_LCTL, KC_Z),KC_X,           KC_C,           KC_V,           KC_B,           KC_HOME,                                        KC_END,         KC_N,           KC_M,           KC_COMMA,       KC_DOT,         MT(MOD_RCTL, KC_SLASH),KC_RSHIFT,
     LT(3,KC_GRAVE), KC_TRANSPARENT, KC_LALT,        KC_LEFT,        KC_RIGHT,                                                                                                       KC_UP,          KC_DOWN,        KC_RALT,        KC_TRANSPARENT, MO(3),
                                                                                                     TG(2),          KC_TRANSPARENT, KC_TRANSPARENT, TG(1),
@@ -158,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_LPRN,        KC_LBRACKET,    KC_TRANSPARENT, KC_TRANSPARENT, KC_RBRACKET,    KC_RPRN
   ),
-
+/*
   ////////////////////////////////////////////////////////////////////////////////////////
   // VIM - NORMAL MODE
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -185,6 +185,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                            KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                                            MACRO_VIM_END_V, KC_TRANSPARENT,
                                                                                            KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,  KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+*/
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // VIM - NAVIGATION
+  ////////////////////////////////////////////////////////////////////////////////////////
+  [4] = LAYOUT_ergodox_pretty(
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(0),                                       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                              KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                              KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                                                    KC_TRANSPARENT, KC_TRANSPARENT,
+                                                                                    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
 
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -240,6 +254,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][5] = {
     ////////////////////////////////////////////////////////////////////////////////////////
     [3] = { {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253}, {42,224,253} },
 
+/*
     //////////////////////////////////////////////////////////////////////////////////////
     // VIM - NORMAL MODE
     //////////////////////////////////////////////////////////////////////////////////////
@@ -275,7 +290,25 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][5] = {
         {150,255,255}, {200,255,255}, { 42,255,255}, {255,255,255}, {000,000,000},
                        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}
     },
+*/
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // TEMPLATE
+    //////////////////////////////////////////////////////////////////////////////////////
+    [4] = {
+        // RIGHT SIDE:
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {150,255,255}, {150,255,255}, {150,255,255}, {150,255,255}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+                       {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        // LEFT SIDE (it's mirrored, don't ask me why...):
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+        {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000},
+                       {000,000,000}, {000,000,000}, {000,000,000}, {000,000,000}
+    },
 
     //////////////////////////////////////////////////////////////////////////////////////
     // TEMPLATE
